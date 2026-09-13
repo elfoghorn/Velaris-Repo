@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nephilim — Velaris Empire RP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Oswald:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #e8e2d3;
+    --surface: #ded5bd;
+    --surface-2: #d3c9ab;
+    --ink: #1c1912;
+    --ink-dim: #5b5340;
+    --gold: #8a6a1f;
+    --gold-bright: #a3801f;
+    --hairline: #b9ac8a;
+    --cool: #3f6f73;
+    --shadow: rgba(28,25,18,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+      --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+      --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+    --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+    --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ color-scheme: light dark; }
+  body{
+    margin:0; background: var(--bg); color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+  .page{ max-width: 900px; margin: 0 auto; padding: 0 20px 90px; }
+
+  /* ---------- NAV ---------- */
+  nav.topnav{
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 14px 20px;
+    background: var(--surface); border-bottom: 1px solid var(--hairline);
+  }
+  .brand{
+    font-family: 'Cinzel', serif; font-size: 0.95rem; letter-spacing: 0.03em;
+    color: var(--ink); text-decoration: none; white-space: nowrap;
+  }
+  .navlinks{ display: flex; gap: 6px; flex-wrap: wrap; }
+  .navlinks a{
+    font-family: 'Oswald', sans-serif; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ink-dim); text-decoration: none;
+    padding: 7px 12px; border: 1px solid transparent; border-radius: 2px;
+  }
+  .navlinks a:hover{ color: var(--gold-bright); border-color: var(--hairline); }
+  .navlinks a.current{ color: var(--gold-bright); border-color: var(--gold); background: var(--surface-2); }
+  .theme-toggle{
+    background: var(--bg); border: 1px solid var(--hairline); color: var(--ink-dim);
+    font-family: 'Oswald', sans-serif; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 7px 10px; cursor: pointer; border-radius: 2px;
+  }
+  .theme-toggle:hover{ color: var(--gold-bright); border-color: var(--gold); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--cool); outline-offset: 2px; }
+
+  .eyebrow{
+    font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: uppercase;
+    letter-spacing: 0.18em; font-size: 0.72rem; color: var(--gold-bright); margin-top: 44px;
+  }
+  h1, h2, h3{ font-family: 'Cinzel', 'Times New Roman', serif; font-weight: 600; text-wrap: balance; margin: 0; color: var(--ink); }
+  h1{ font-size: clamp(2.2rem, 5vw, 3.2rem); margin: 10px 0 18px; }
+
+  .lede{ max-width: 68ch; color: var(--ink-dim); font-size: 1.05rem; margin: 0 0 20px; }
+
+  .status-row{
+    display: flex; flex-wrap: wrap; gap: 24px; margin: 0 0 20px;
+    padding: 16px 20px; background: var(--surface); border: 1px solid var(--hairline);
+  }
+  .status-item{ min-width: 200px; }
+  .status-label{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.64rem; color: var(--gold-bright); margin-bottom: 4px; }
+  .status-value{ font-size: 0.92rem; color: var(--ink-dim); }
+
+  section{ padding: 48px 0; }
+  section + section{ border-top: 1px solid var(--hairline); }
+  .section-head{ display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
+  .section-num{ font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); }
+  .section-title{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); }
+
+  .prose{ max-width: 70ch; }
+  .prose p{ color: var(--ink-dim); margin: 0 0 1.1em; font-size: 1rem; }
+  .prose p:last-child{ margin-bottom: 0; }
+
+  .subhead{
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em;
+    font-size: 0.7rem; color: var(--gold-bright); margin: 28px 0 14px;
+  }
+  .subhead:first-child{ margin-top: 0; }
+
+  .info-grid{ display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--hairline); margin: 0 0 20px; }
+  .field{ padding: 16px clamp(12px, 2vw, 20px); border-left: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .info-grid .field:nth-child(3n+1){ border-left: none; }
+  .info-grid .field:nth-last-child(-n+3){ border-bottom: none; }
+  .field-label{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.62rem; color: var(--gold-bright); margin-bottom: 6px; }
+  .field-value{ font-size: 0.9rem; color: var(--ink); }
+
+  ul.list{ list-style: none; margin: 0 0 1.1em; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  ul.list li{ position: relative; padding-left: 20px; color: var(--ink-dim); font-size: 0.97rem; }
+  ul.list li::before{ content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); }
+
+  .entry-list{ display: flex; flex-direction: column; gap: 18px; }
+  .entry{ padding: 16px 20px; background: var(--surface); border-left: 3px solid var(--gold); }
+  .entry-name{ font-family: 'Cinzel', serif; font-size: 1rem; margin-bottom: 6px; }
+  .entry p{ margin: 0; color: var(--ink-dim); font-size: 0.92rem; }
+
+  .callout{
+    border: 1px dashed var(--hairline); background: var(--surface-2);
+    padding: 18px 22px; margin: 18px 0; font-size: 0.92rem; color: var(--ink-dim);
+  }
+  .callout em{ color: var(--ink); font-style: italic; }
+
+  footer{
+    padding: 40px 0 20px; display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px; flex-wrap: wrap; color: var(--ink-dim);
+    font-family: 'Oswald', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    border-top: 1px solid var(--hairline);
+  }
+  footer a{ color: var(--gold-bright); text-decoration: none; }
+
+  .scene{ margin: 22px 0 28px; }
+  .scene img{ width: 100%; display: block; border: 1px solid var(--hairline); }
+  .scene-caption{
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.66rem; color: var(--ink-dim); margin-top: 10px; text-align: center;
+  }
+
+  @media (max-width: 640px){
+    .info-grid{ grid-template-columns: 1fr; }
+    .info-grid .field:nth-child(n){ border-left: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Velaris Empire RP</a>
+  <div class="navlinks">
+    <a href="index.html">Index</a>
+    <a href="nephilim.html" class="current">Nephilim</a>
+    <a href="marasan.html">Marasa'n</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">Theme</button>
+</nav>
+
+<div class="page">
+
+  <div class="eyebrow">Velaris Empire &middot; Bloodline Record</div>
+  <h1>Nephilim</h1>
+  <p class="lede">A bloodline born from a working no one on either side sanctioned, that built a nation on ground touching both heaven and hell, and outlived it in scattered pieces after heaven ended it in a single hour.</p>
+
+  <div class="status-row">
+    <div class="status-item">
+      <div class="status-label">Origin</div>
+      <div class="status-value">Adonai-Vel &mdash; remembered in Velaris, where it's remembered at all, only as the Precipice Realm.</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Status</div>
+      <div class="status-value">Extinct as a nation. A handful of bloodline survivors remain scattered, mostly unrecognized for what they are.</div>
+    </div>
+  </div>
+
+  <section id="origins">
+    <div class="section-head"><span class="section-num">I.</span><h2 class="section-title">Origins, Before the Nation</h2></div>
+    <div class="prose">
+      <p>The bloodline began before Adonai-Vel, with a deliberate act rather than a romance: Lilith and a nameless member of Celestine's own host set out to create beings capable of surviving both celestial and demonic power at once. No one in Velaris knows this. Adonai-Vel was founded generations later, by that first working's descendants, as the first place a Nephilim had ever been allowed to simply exist.</p>
+    </div>
+  </section>
+
+  <section id="lilith-seraph">
+    <div class="section-head"><span class="section-num">II.</span><h2 class="section-title">Lilith and the Seraph</h2></div>
+    <div class="prose">
+      <p>Lilith was already the Mother of All Demons, sister to Asmo, the Devil, generations before Adonai-Vel existed. A Seraph, or an Archangel by some accounts, crossed into her court, and the two of them attempted something neither side had ever sanctioned: a working meant to produce beings that could hold both celestial and demonic power at once instead of being consumed by whichever half touched them first. The Seraph gave a portion of his own divine essence. Lilith gave her blood and her demonic essence. What answered wasn't born in any sense either species recognized. It was made, out of that union of power rather than flesh, and it broke the one law both sides had always kept.</p>
+      <p>Neither side forgave it. Celestine's host stripped the Seraph of what made him what he was and erased his name from the choir's own record so completely that no version of it survives. Asmo saw his sister's part in it as an act against their own court, done in secret and with an enemy's power besides, and turned on the children rather than protect them. Lilith chose them over her brother's favor, hiding them until they were old enough to hide themselves.</p>
+      <p>She took no part in anything her descendants built afterward, Adonai-Vel included, and no account places her anywhere near its ending. Whatever she carries from that working now, she doesn't call it grief and she doesn't bring it up. Given centuries to remember it in detail, Lilith has simply chosen not to.</p>
+    </div>
+  </section>
+
+  <section id="overview">
+    <div class="section-head"><span class="section-num">III.</span><h2 class="section-title">Overview</h2></div>
+    <div class="prose">
+      <p>Long before the Emperor's line or Auralith's crown, a third seat existed: a nation on ground said to touch both Celestine's light and Vashtara's dark at once. Its people were bred for that in-between position, long-lived enough to sit at the table with gods, mortal enough to still need one. Velaris no longer has the name. It has a ruin in the Hollowlands, labelled after a king who came looking for it centuries later, and a bloodline that never stopped knowing what that ruin used to be called.</p>
+    </div>
+  </section>
+
+  <section id="nation">
+    <div class="section-head"><span class="section-num">IV.</span><h2 class="section-title">Adonai-Vel Itself</h2></div>
+    <div class="scene">
+      <img src="adonai-prime.png" alt="Adonai-Vel at its height: gold-leafed spires and terraced white stone rising along a cliffside canyon at dusk, an ancient tree growing from the rock below the city, robed and armored figures standing along a balustrade.">
+      <div class="scene-caption">Adonai-Vel, before the Hollowing</div>
+    </div>
+    <div class="prose">
+      <p>The nation was small by any kingdom's standard and never tried to be otherwise. Its founders built inward rather than outward, on the theory that a people made from two gods' leftover law didn't need territory to prove they existed. The capital held terraces cut into pale stone, half of them roofed in gold leaf to catch the sun for Celestine, half of them sunk below ground level and left open to the night sky for Vashtara. No building in the city ignored either god. That was the rule long before it became a law: build for both, or don't build at all.</p>
+      <p>Government sat with a council of priest-kings, one line per founding family, each family tracing itself back to a different child of the first generation. They didn't rule through conquest or bloodshed, since there was no one nearby to conquer. They ruled through the one thing Adonai-Vel actually had that no one else did: a working relationship with both gods at once, however uneasy. Villages on both sides of the portal that would one day become Velaris and Auralith sent envoys there for exactly that reason, to have a dispute blessed, a treaty witnessed, a plague explained. Adonai-Vel took no payment for it that survives in any record. What it took, according to its own histories, was standing. Being needed by mortals kept it fed. Being needed by two gods kept it honest.</p>
+      <p>Daily life leaned toward long views. A people who might live centuries build differently than a people who won't. Adonai-Vel's art, what fragments of it exist, favors things meant to be finished by someone else: gardens planted for a shape they wouldn't take for eighty years, songs written in movements meant to be added to generation after generation, a single tapestry some records claim took eleven priest-kings and was still unfinished when the Hollowing came for it.</p>
+    </div>
+  </section>
+
+  <section id="rise">
+    <div class="section-head"><span class="section-num">V.</span><h2 class="section-title">The Rise</h2></div>
+    <div class="prose">
+      <p>No single moment turned Adonai-Vel toward its own ending. Centuries of borrowing a portion of each god's power taught its people how to do more with less, on their own initiative, without asking first. They built on ground that shouldn't have held a city that size. They healed wounds no mortal physician could touch. They forged weapons and armor that outlasted the smiths who made them by lifetimes, and gave those smiths centuries rather than decades to get good at the work. None of it needed either god's blessing past the first few generations. Adonai-Vel had learned to run its own workshop.</p>
+      <p>By the time anyone outside the nation was paying close attention, it wasn't a curiosity anymore. It fielded soldiers who healed from wounds that should have ended them, scholars with genuine centuries to specialize in a single question, and craftsmen whose work still turns up today in places that have never heard the name Adonai-Vel. Heaven had spent generations treating a useful buffer state as the lesser party in the arrangement. That stopped being an accurate description well before anyone in power admitted it out loud.</p>
+      <p>The council split over what to do with everything the nation had become. One faction, led by the eldest founding house, argued for restraint: a good arrangement doesn't need testing. A louder, younger faction argued that a nation which had already outgrown its old role owed no apology for saying so plainly. What they built next, a throne meant to formalize the power they already held in practice, mattered less as a cause than as a symbol heaven could no longer pretend not to see. Adonai-Vel had already become the thing the throne only announced.</p>
+    </div>
+  </section>
+
+  <section id="war">
+    <div class="section-head"><span class="section-num">VI.</span><h2 class="section-title">The War</h2></div>
+    <div class="prose">
+      <p>Heaven had tolerated Adonai-Vel as a useful buffer for longer than it ever intended to. What ended the tolerance wasn't the throne by itself. It was the plain fact that a mortal-adjacent bloodline had grown strong enough, capable enough, and independent enough that heaven could no longer treat the arrangement as one-sided in its own favor. Celestine's host had been the greater power in that relationship without contest for generations. Adonai-Vel had quietly stopped being the lesser party, and heaven decided, once it finally looked, that a stain like that on the order of things could not be allowed to stand.</p>
+      <p>The war that followed lasted a hundred years. It was neither clean nor quick. Adonai-Vel's soldiers, long-lived and hardened by a century of borrowed conflict before this one, held ground no ordinary mortal army could have held, and the early decades cost heaven more than its own records care to admit. Entire generations of Nephilim were born, raised, and killed inside that war, fighting something their grandparents had provoked and their grandchildren would ultimately lose. Heaven's own conduct across that century isn't remembered kindly even by its own surviving accounts: sieges that made no distinction between soldier and civilian, prisoners who didn't survive being questioned, whole terraces of the capital burned rather than taken intact. Adonai-Vel gave as good as it got for most of that century. It simply couldn't keep giving forever against something that didn't need to sleep, eat, or replace its dead the way mortals do.</p>
+      <p>By the war's final years, Adonai-Vel was a failing nation defending a capital it could no longer properly feed, count, or hold. Heaven had every advantage a hundred years of attrition provides, and it used all of them.</p>
+    </div>
+  </section>
+
+  <section id="hollowing">
+    <div class="section-head"><span class="section-num">VII.</span><h2 class="section-title">The Hollowing</h2></div>
+    <div class="prose">
+      <p>Heaven ended it with a single act rather than a final battle. When Adonai-Vel's last defenders made their stand around the throne room, the Seraphim above didn't send more soldiers. They unleashed heaven's power directly, throwing down light like spears from overhead in numbers no city, however fortified, could have survived. Velaris's own histories call what followed the Hollowing, and it's the reason a stretch of the Outlands still won't hold light properly and carries the name Hollowlands for it. Celestine's own light, spent at a scale it was never meant to be spent at, has never come back whole in that ground since.</p>
+      <p>No single account of what the actual hour looked like survives whole. What does survive, passed down inside the bloodline rather than kept in any library, agrees on the shape of it even where the details drift: no further warning beyond the century that had already been warning enough, light falling from directly overhead in numbers too dense to count, and the ground giving out under people before they'd finished looking up. Those who lived to describe it afterward describe silence more than sound. Whatever heaven did to that land in that hour, it didn't announce itself the way an ordinary battle does.</p>
+      <p>What was left of Adonai-Vel wasn't leveled so much as erased. The handful who survived it, those who hadn't been in the capital when the Seraphim came, or who'd fled far enough during the hundred years of war to still be alive to flee further, were given no ground to return to and no standing left to ask for any. Heaven's judgment didn't stop at the ruin. It extended to every survivor still breathing: exile, absolute and unappealed, from a homeland that no longer physically existed to return to anyway. The punishment was never a curse laid on their blood. It was living through a war that took a century of their family's lives, watching their entire people end in a single hour they couldn't stop, and being forbidden the one piece of ground where any of it would have made sense to grieve.</p>
+      <p>Centuries later, a king now remembered only as the Late King went looking for what was left of it. His study still stands out there, still bearing his name. Whatever he found did not end well for him, and the Hell Gates near his study did not exist before he started digging.</p>
+    </div>
+    <div class="scene">
+      <img src="adonai-ruins.png" alt="The ruin of Adonai-Vel today: frost-white broken terraces and a shattered bridge over a canyon, a dead white tree and a living black tree grown together at the center, jagged black spires thrust up from the canyon floor.">
+      <div class="scene-caption">Ashura's Precipice Realm Study, what Velaris calls it now</div>
+    </div>
+  </section>
+
+  <section id="biology">
+    <div class="section-head"><span class="section-num">VIII.</span><h2 class="section-title">Biology</h2></div>
+    <div class="subhead">Standard Profile</div>
+    <div class="info-grid">
+      <div class="field"><div class="field-label">Classification</div><div class="field-value">Not elf, demon, or angel. A distinct bloodline descended from one demon and one member of Celestine's host.</div></div>
+      <div class="field"><div class="field-label">Height</div><div class="field-value">Tall across both sexes. Females run 5'10" to 6'2". Males run comparable or taller.</div></div>
+      <div class="field"><div class="field-label">Build</div><div class="field-value">Dense muscle and bone regardless of training. Blunt trauma that kills a human often doesn't kill a Nephilim outright.</div></div>
+      <div class="field"><div class="field-label">Skin</div><div class="field-value">Pale across the entire bloodline, independent of ancestry or region. Doesn't tan.</div></div>
+      <div class="field"><div class="field-label">Hair</div><div class="field-value">Dark at birth in most cases. Converts to grey or silver-white starting around the first century, tied to magic use rather than calendar age.</div></div>
+      <div class="field"><div class="field-label">Eyes</div><div class="field-value">Heterochromia in every full-blooded Nephilim: one gold, amber, or copper; one pale, near-white. Neither fully stabilizes.</div></div>
+      <div class="field"><div class="field-label">Diet</div><div class="field-value">Omnivorous, human-equivalent. No dietary restriction tied to the bloodline.</div></div>
+      <div class="field"><div class="field-label">Reproduction</div><div class="field-value">Sexual, compatible with humans and most demonkin and angelkin. Half-blood offspring inherit one magic type, never both.</div></div>
+      <div class="field"><div class="field-label">Sensory Range</div><div class="field-value">Elevated night vision, the Vashtara inheritance. No enhancement to hearing, smell, or touch beyond peak human range.</div></div>
+      <div class="field"><div class="field-label">Magic Affinity</div><div class="field-value">Innate, present from birth, both light and shadow. Most Nephilim favor one side over the other out of habit rather than necessity.</div></div>
+      <div class="field"><div class="field-label">Regeneration</div><div class="field-value">Minor injuries heal faster than human baseline. Major injuries, including lost limbs, do not regenerate.</div></div>
+      <div class="field"><div class="field-label">Known Vulnerabilities</div><div class="field-value">Physical trauma kills, same as any mortal, given enough of it. No vulnerability to silver, sunlight, or holy symbols.</div></div>
+    </div>
+    <div class="subhead">Aging</div>
+    <ul class="list">
+      <li>Birth to roughly 100 years: ages at human rate.</li>
+      <li>100 to roughly 600 years: aging slows to a fraction of human rate.</li>
+      <li>600 years onward: aging effectively stops. Death comes from violence, not age. No confirmed case has died of old age past this point.</li>
+    </ul>
+  </section>
+
+  <section id="exile">
+    <div class="section-head"><span class="section-num">IX.</span><h2 class="section-title">Exile and the Scattering</h2></div>
+    <div class="prose">
+      <p>What survived the Hollowing didn't survive as a people so much as a scatter of individuals who happened to share a bloodline, cast out under a judgment none of them were given any way to contest. Adonai-Vel had no border to defend once its ground had failed under it, and no capital to retreat to once the capital was the part that failed worst, and heaven's decree made returning impossible even for those who might have tried. Survivors went in whatever direction put the most distance between themselves and the ruin, which for most of them meant the coast, and from the coast, the sea.</p>
+      <p>The earliest generations of survivors changed their names within a lifetime, usually more than once. Some settled quietly into mortal villages and let their unusual longevity get explained away as a family trait or a local rumor. Others kept moving on principle, unwilling to be in one place long enough for a pattern to be noticed. A few tried, in the first century or two after the exile, to find each other and rebuild something. Every one of those attempts failed, some quietly and some badly, and by the second century most survivors had concluded that gathering was the mistake that had gotten their parents' generation killed the first time.</p>
+      <p>No unified diaspora culture ever formed. What formed instead was a habit, passed down more by instinct than instruction, of staying small, staying mobile, and never explaining the eyes.</p>
+    </div>
+  </section>
+
+  <section id="today">
+    <div class="section-head"><span class="section-num">X.</span><h2 class="section-title">Nephilim Today</h2></div>
+    <div class="subhead">Kin Apart</div>
+    <div class="prose">
+      <p>Demons recognize the bloodline faster than most, and not kindly. Whatever loyalty the Mother of All Demons held for her hidden children generations ago didn't automatically pass down to every demon born after her, and plenty of Asmo's older court still treat Nephilim as a standing reminder of a working none of them personally approved but all of them apparently still resent, made behind the court's back and with an enemy's power besides.</p>
+      <p>Angels are worse, if less common to encounter at all. Celestine's host erased the Seraph's name from its own record rather than let the story survive, and whatever institutional memory remains of that erasure treats the bloodline less as kin and more as evidence. Most Nephilim who've ever crossed paths with a true angel describe the encounter as brief and cold, and none describe it as friendly.</p>
+      <p>Ordinary demons and ordinary angels, the kind with no particular rank or memory that old, mostly don't recognize a Nephilim on sight at all. The signs are too easy to mistake for something mundane, which suits the bloodline fine.</p>
+    </div>
+    <div class="subhead">Traces That Outlasted the Nation</div>
+    <div class="prose">
+      <p>Adonai-Vel's language never actually died. A handful of lineage-keepers within the scattered bloodline still speak it fluently and teach it deliberately, through hand-copied primers guarded as tightly as anything the bloodline has left. Most survivors never crossed paths with a keeper and never will. What reached them instead is fragments: a few personal names, a handful of ritual phrases, nothing that adds up to a taught language. Adonai-Vel itself is one of the few words to survive whole outside that guarded circle. A few personal names still carry the old rhythm, clipped and vowel-heavy, which is part of why Marasa'n's name draws a second look from anyone who's ever studied dead languages, though almost no one in Velaris has reason to, and she has no more claim on a keeper's teaching than any other disconnected survivor does.</p>
+      <p>Craftsmanship survived better than language did, carried out in objects rather than memory. Adonai-Vel's smiths built for both gods the same way its architects did, working gold and dark silver into a single piece rather than choosing one, and a handful of those pieces are still out there somewhere, in old family vaults or forgotten battlefield graves, unrecognized for what they are by anyone who finds them. A blade or a piece of armor built in the old style doesn't announce itself as anything but very old and very well made. Only another Nephilim, or someone who's spent a lifetime studying dead nations, would know to look twice.</p>
+    </div>
+    <div class="subhead">Nephilim in Velaris Today</div>
+    <div class="prose">
+      <p>Nobody in Velaris is looking for Nephilim, which is the main reason none have been found. The signs read as coincidence to anyone who doesn't already know what they mean: unusual eyes get put down to a rare condition or a good dye job, early grey gets put down to stress or a family trait, an unusually long life gets put down to good fortune, at least until it stops being plausible and the person in question quietly moves on before anyone does the math.</p>
+      <p>Common folklore across both kingdoms carries a few surviving fragments of the old fear without any of the context. A person with two different-colored eyes is still, in some corners of the Outlands, considered lucky or unlucky depending on who's asked, and a story about a "grey traveler who never seems to age" surfaces often enough in tavern talk to suggest more than one Nephilim has passed through and left an impression without ever explaining why. None of this rises to organized suspicion. It rises to the kind of thing people mention once and then forget, which is exactly the cover the bloodline has learned to rely on.</p>
+      <p>Bloodline members who do settle somewhere tend toward work that rewards a long view and doesn't ask too many questions about the past: mercenary work, trade routes, old-object appraisal, and occasionally the priesthood, ironically enough, of one god or the other, usually Vashtara's smaller and less-watched shrines rather than Celestine's public ones.</p>
+    </div>
+  </section>
+
+  <section id="culture">
+    <div class="section-head"><span class="section-num">XI.</span><h2 class="section-title">Culture and Reputation</h2></div>
+    <div class="prose">
+      <p>No homeland remains to return to, and every telling agrees the exile was explicit and permanent. What's left are scattered individuals with no court, no shared home, and sharply different opinions on whether Adonai-Vel deserved what it got.</p>
+      <p>Three postures show up among the survivors who still know what they are:</p>
+    </div>
+    <ul class="list">
+      <li>A minority treat the war and the exile as deserved and live in something close to penance, refusing any position of power or prominence wherever they settle.</li>
+      <li>A smaller, harder group believe Adonai-Vel was right to want more and simply lost.</li>
+      <li>Most stay unresolved between the two positions and never fully choose one.</li>
+    </ul>
+    <div class="prose">
+      <p>No one in Velaris currently connects the Precipice Realm to Adonai-Vel by name; that thread survives only in the bloodline itself, and even within the bloodline, most survivors know the name without knowing where the ruin actually sits. Outside it, anyone who recognizes the old signs tends toward suspicion first. Velaris does not tell kindly the story of a nation that grew strong enough to rival heaven.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Velaris Empire &middot; Bloodline Record</span>
+    <span><a href="marasan.html">Next: Marasa'n &rarr;</a></span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  try{
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var stored = null;
+    try { stored = localStorage.getItem('velaris-rp-theme'); } catch(e){}
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var effectiveDark = current === 'dark' || (!current && prefersDark);
+      var next = effectiveDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('velaris-rp-theme', next); } catch(e){}
+    });
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

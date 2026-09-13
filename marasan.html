@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marasa'n — Velaris Empire RP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Oswald:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #e8e2d3; --surface: #ded5bd; --surface-2: #d3c9ab;
+    --ink: #1c1912; --ink-dim: #5b5340; --gold: #8a6a1f; --gold-bright: #a3801f;
+    --hairline: #b9ac8a; --cool: #3f6f73; --shadow: rgba(28,25,18,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+      --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+      --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+    --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+    --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ color-scheme: light dark; }
+  body{ margin:0; background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; line-height: 1.6; }
+  .page{ max-width: 900px; margin: 0 auto; padding: 0 20px 90px; }
+
+  nav.topnav{
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 14px 20px; background: var(--surface); border-bottom: 1px solid var(--hairline);
+  }
+  .brand{ font-family: 'Cinzel', serif; font-size: 0.95rem; letter-spacing: 0.03em; color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .navlinks{ display: flex; gap: 6px; flex-wrap: wrap; }
+  .navlinks a{ font-family: 'Oswald', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-dim); text-decoration: none; padding: 7px 12px; border: 1px solid transparent; border-radius: 2px; }
+  .navlinks a:hover{ color: var(--gold-bright); border-color: var(--hairline); }
+  .navlinks a.current{ color: var(--gold-bright); border-color: var(--gold); background: var(--surface-2); }
+  .theme-toggle{ background: var(--bg); border: 1px solid var(--hairline); color: var(--ink-dim); font-family: 'Oswald', sans-serif; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 7px 10px; cursor: pointer; border-radius: 2px; }
+  .theme-toggle:hover{ color: var(--gold-bright); border-color: var(--gold); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--cool); outline-offset: 2px; }
+
+  .eyebrow{ font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.72rem; color: var(--gold-bright); margin-top: 44px; }
+  h1, h2, h3{ font-family: 'Cinzel', 'Times New Roman', serif; font-weight: 600; text-wrap: balance; margin: 0; color: var(--ink); }
+  h1{ font-size: clamp(2.4rem, 6vw, 3.6rem); margin: 10px 0 18px; }
+  .lede{ max-width: 62ch; color: var(--ink-dim); font-size: 1.05rem; margin: 0 0 20px; }
+
+  .dossier{ display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--hairline); margin-bottom: 8px; }
+  .field{ padding: 16px clamp(12px, 2vw, 20px); border-left: 1px solid var(--hairline); }
+  .field:first-child{ border-left: none; }
+  .field-label{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.62rem; color: var(--gold-bright); margin-bottom: 6px; }
+  .field-value{ font-size: 0.9rem; color: var(--ink); }
+
+  section{ padding: 48px 0; }
+  section + section{ border-top: 1px solid var(--hairline); }
+  .section-head{ display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
+  .section-num{ font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); }
+  .section-title{ font-size: clamp(1.3rem, 2.6vw, 1.7rem); }
+
+  .lede2{ max-width: 68ch; color: var(--ink-dim); margin: 0 0 30px; }
+
+  .info-block{ margin-bottom: 34px; }
+  .info-block:last-child{ margin-bottom: 0; }
+  .info-grid{ display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--hairline); margin-bottom: 14px; }
+  .info-grid .field{ border-left: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .info-grid .field:nth-child(3n+1){ border-left: none; }
+  .info-grid .field:nth-last-child(-n+3){ border-bottom: none; }
+  .info-note{ max-width: 68ch; color: var(--ink-dim); margin: 0 0 1.1em; font-size: 0.95rem; }
+  .info-note:last-child{ margin-bottom: 0; }
+
+  .trait-columns{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: clamp(18px, 3vw, 40px); margin-bottom: 14px; }
+  .trait-col-head{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.7rem; margin-bottom: 14px; }
+  .trait-col-head.strengths{ color: var(--gold-bright); }
+  .trait-col-head.weaknesses{ color: var(--cool); }
+  .trait-item{ margin-bottom: 14px; }
+  .trait-item:last-child{ margin-bottom: 0; }
+  .trait-item-label{ font-family: 'Cinzel', serif; font-size: 0.88rem; color: var(--ink); margin-bottom: 4px; }
+  .trait-item p{ margin: 0; color: var(--ink-dim); font-size: 0.9rem; }
+
+  .story{ max-width: 68ch; }
+  .story p{ color: var(--ink-dim); margin: 0 0 1.1em; font-size: 1rem; }
+  .story p:last-child{ margin-bottom: 0; }
+  .story p:first-of-type::first-letter{ font-family: 'Cinzel', serif; font-size: 3.2rem; line-height: 0.78; float: left; padding: 4px 10px 0 0; color: var(--gold); }
+  .story p.beat{ font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--ink); margin: 1.6em 0; letter-spacing: 0.02em; }
+
+  .doctrine-lede{ max-width: 68ch; color: var(--ink-dim); margin: 0 0 22px; font-size: 1rem; }
+  .doctrine-body{ max-width: 68ch; margin: 0 0 34px; }
+  .doctrine-body p{ color: var(--ink-dim); margin: 0 0 1.1em; font-size: 0.97rem; }
+  .doctrine-body p:last-child{ margin-bottom: 0; }
+
+  .subhead{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; color: var(--gold-bright); margin: 0 0 18px; }
+
+  .ability-list{ display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+  .ability{ padding: 16px 22px; background: var(--surface); border-left: 3px solid var(--gold); }
+  .ability-name{ font-family: 'Cinzel', serif; font-size: 1.02rem; margin-bottom: 6px; }
+  .ability p{ margin: 0; color: var(--ink-dim); font-size: 0.92rem; }
+
+  .finishers{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+  .finisher{ padding: 22px 22px; border: 1px solid var(--hairline); position: relative; }
+  .finisher.light{ background: linear-gradient(180deg, rgba(201,161,59,0.10), transparent 70%); border-top: 2px solid var(--gold); }
+  .finisher.dark{ background: linear-gradient(180deg, rgba(63,111,115,0.10), transparent 70%); border-top: 2px solid var(--cool); }
+  .finisher-name{ font-family: 'Cinzel', serif; font-size: 1.15rem; margin-bottom: 10px; }
+  .finisher.light .finisher-name{ color: var(--gold-bright); }
+  .finisher.dark .finisher-name{ color: var(--cool); }
+  .finisher p{ margin: 0; color: var(--ink-dim); font-size: 0.93rem; }
+
+  .skill-tier-head{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; color: var(--gold-bright); margin: 30px 0 14px; }
+  .skill-tier-head:first-of-type{ margin-top: 0; }
+  .skill-card{ padding: 18px 22px; background: var(--surface); border-left: 3px solid var(--gold); margin-bottom: 14px; }
+  .skill-card.tier-ultimate{ border-left-color: var(--cool); background: linear-gradient(180deg, rgba(201,161,59,0.08), var(--surface) 65%); }
+  .skill-head{ display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .skill-name{ font-family: 'Cinzel', serif; font-size: 1.02rem; }
+  .skill-tag{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.64rem; color: var(--cool); }
+  .stat-row{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .stat-chip{ font-family: 'Oswald', sans-serif; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); background: var(--surface-2); border: 1px solid var(--hairline); padding: 4px 9px; border-radius: 2px; }
+  .stat-chip strong{ color: var(--gold-bright); font-weight: 600; }
+  .skill-card p{ margin: 0 0 8px; color: var(--ink-dim); font-size: 0.9rem; }
+  .skill-card p:last-child{ margin-bottom: 0; }
+  .skill-card p.weak{ padding-top: 8px; border-top: 1px dashed var(--hairline); }
+  .skill-card p.weak strong{ color: var(--ink); font-weight: 600; }
+  .skill-card p.example{ padding-top: 8px; border-top: 1px dashed var(--hairline); font-style: italic; color: var(--ink); }
+  .example-tag{ font-family: 'Oswald', sans-serif; font-style: normal; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6rem; color: var(--gold-bright); margin-right: 8px; }
+  .skill-lists{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: clamp(18px, 3vw, 40px); margin-top: 30px; }
+
+  .plates{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+  .plate{ background: var(--surface); border: 1px solid var(--hairline); overflow: hidden; }
+  .plate-img{ position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-bottom: 1px solid var(--hairline); }
+  .plate-img img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .plate-body{ padding: 20px 22px; }
+  .plate-tag{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.66rem; color: var(--gold-bright); margin-bottom: 8px; }
+  .plate-name{ font-family: 'Cinzel', serif; font-size: 1.1rem; margin-bottom: 8px; }
+  .plate p{ font-size: 0.92rem; color: var(--ink-dim); margin: 0; }
+
+  .portrait-frame{ position: relative; margin: 0 0 28px; border: 1px solid var(--hairline); background: var(--surface); overflow: hidden; }
+  .portrait-frame img{ width: 100%; max-height: 460px; object-fit: cover; object-position: center 15%; display: block; }
+  .corner{ position: absolute; width: 24px; height: 24px; pointer-events: none; }
+  .corner.tl{ top: 8px; left: 8px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+  .corner.br{ bottom: 8px; right: 8px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+
+  .relic{ display: flex; flex-direction: column; gap: 24px; }
+  .relic-media{ align-self: flex-start; max-width: 380px; width: 100%; background: var(--surface); border: 1px solid var(--hairline); padding: 16px; }
+  .relic-media img{ width: 100%; display: block; }
+  .relic-copy p{ color: var(--ink-dim); margin: 0 0 14px; font-size: 0.98rem; max-width: 68ch; }
+  .relic-copy p:last-child{ margin-bottom: 0; }
+  .relic-name{ font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 4px; }
+  .relic-sub{ font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; color: var(--cool); margin-bottom: 18px; }
+
+  .aside-panel{ position: relative; border: 1px dashed var(--hairline); background: var(--surface-2); padding: 26px clamp(16px, 3vw, 30px); }
+  .aside-tag{ position: absolute; top: -11px; left: 22px; background: var(--bg); padding: 2px 10px; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.65rem; color: var(--gold-bright); border: 1px solid var(--hairline); }
+  .aside-panel p{ color: var(--ink-dim); margin: 0 0 14px; font-size: 0.95rem; max-width: 68ch; }
+  .aside-list{ list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .aside-list li{ position: relative; padding-left: 20px; color: var(--ink-dim); font-size: 0.92rem; }
+  .aside-list li::before{ content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); }
+
+  footer{ padding: 40px 0 20px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; color: var(--ink-dim); font-family: 'Oswald', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid var(--hairline); }
+  footer a{ color: var(--gold-bright); text-decoration: none; }
+
+  @media (max-width: 760px){
+    .dossier{ grid-template-columns: repeat(2, 1fr); }
+    .field:nth-child(3){ border-left: none; }
+    .info-grid{ grid-template-columns: 1fr; }
+    .info-grid .field:nth-child(n){ border-left: none; }
+    .trait-columns{ grid-template-columns: 1fr; }
+    .plates{ grid-template-columns: 1fr; }
+    .finishers{ grid-template-columns: 1fr; }
+    .skill-lists{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Velaris Empire RP</a>
+  <div class="navlinks">
+    <a href="index.html">Index</a>
+    <a href="nephilim.html">Nephilim</a>
+    <a href="marasan.html" class="current">Marasa'n</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">Theme</button>
+</nav>
+
+<div class="page">
+
+  <div class="eyebrow">Adonai-Vel &middot; Bloodline Record</div>
+  <h1>Marasa'n</h1>
+  <p class="lede">Past nine centuries old by her own rough count. She held a flank the day her nation fell, found a blade no one has been able to explain since, and now walks Velaris looking for anything else the war left standing.</p>
+
+  <div class="portrait-frame">
+    <img src="portrait.png" alt="Marasa'n, a tall Nephilim woman with silver-white hair and heterochromatic eyes, one molten gold and one pale luminous light.">
+    <span class="corner tl"></span>
+    <span class="corner br"></span>
+  </div>
+
+  <div class="dossier">
+    <div class="field"><div class="field-label">Race</div><div class="field-value">Nephilim, Adonai-Vel bloodline</div></div>
+    <div class="field"><div class="field-label">Age</div><div class="field-value">900+ years. Stopped counting exactly.</div></div>
+    <div class="field"><div class="field-label">Origin</div><div class="field-value">Born into the war. Fought its final defense.</div></div>
+    <div class="field"><div class="field-label">Occupation</div><div class="field-value">Mercenary &amp; shop owner</div></div>
+    <div class="field"><div class="field-label">Whereabouts</div><div class="field-value">Velaris Capital, when she isn't away on a lead</div></div>
+  </div>
+
+  <section id="biography">
+    <div class="section-head"><span class="section-num">I.</span><h2 class="section-title">Biographical Record</h2></div>
+
+    <div class="info-block">
+      <div class="subhead">Basic Information</div>
+      <div class="info-grid">
+        <div class="field"><div class="field-label">Full Name</div><div class="field-value">Marasa'n &mdash; no surname</div></div>
+        <div class="field"><div class="field-label">Nicknames / Titles</div><div class="field-value">None she claims or answers to</div></div>
+        <div class="field"><div class="field-label">Age</div><div class="field-value">Past nine centuries</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-value">Female</div></div>
+        <div class="field"><div class="field-label">Race</div><div class="field-value">Nephilim, Adonai-Vel bloodline</div></div>
+        <div class="field"><div class="field-label">Alignment</div><div class="field-value">Neutral Good, nuanced</div></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="subhead">Appearance</div>
+      <div class="info-grid">
+        <div class="field"><div class="field-label">Height</div><div class="field-value">6'1" (185 cm)</div></div>
+        <div class="field"><div class="field-label">Weight</div><div class="field-value">~175 lbs (79 kg)</div></div>
+        <div class="field"><div class="field-label">Eye Color</div><div class="field-value">Heterochromia &mdash; molten gold, pale near-silver</div></div>
+        <div class="field"><div class="field-label">Hair</div><div class="field-value">Long, pale silver-white</div></div>
+        <div class="field"><div class="field-label">Skin Tone</div><div class="field-value">Pale, near the shade of her hair</div></div>
+        <div class="field"><div class="field-label">Build</div><div class="field-value">Tall, dense muscle, no scars</div></div>
+      </div>
+      <p class="info-note">No scars anywhere on her body despite centuries of continuous combat, a side effect of her longevity rather than luck. In combat, a spiked halo of golden light gathers behind her head when she draws deeply enough on Celestine's half of her bloodline: not permanent, but unmistakable to anyone who's seen it once.</p>
+      <p class="info-note">Day to day, plain boots and practical layers that give away nothing about the money behind them. Formal and battle dress are detailed in the Field Record below. Vel'kaesh rides across her back in all three registers.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="subhead">Personality</div>
+      <div class="trait-columns">
+        <div>
+          <div class="trait-col-head strengths">Strengths</div>
+          <div class="trait-item"><div class="trait-item-label">Physical &mdash; Superstrength</div><p>Centuries of martial conditioning layered onto Nephilim physiology. Bounded, not absolute: she tires, wears down, and can be killed like anyone else if the wound is bad enough.</p></div>
+          <div class="trait-item"><div class="trait-item-label">Psychological &mdash; Peak</div><p>Battle-hardened composure that held a command post through the final defense of her own nation. Extreme patience built from centuries of searching for very little.</p></div>
+          <div class="trait-item"><div class="trait-item-label">Racial &mdash; Superstrength</div><p>Innate access to both Celestine's light and Vashtara's dark, where most Nephilim only ever master one half. A lifespan measured in centuries, and recovery from ordinary wounds faster than her body should manage.</p></div>
+        </div>
+        <div>
+          <div class="trait-col-head weaknesses">Weaknesses</div>
+          <div class="trait-item"><div class="trait-item-label">Psychological</div><p>Reluctant to get close to anyone after centuries of outliving every mortal she's cared about, which reads as coldness more than the self-protection it is. Adonai-Vel's nobility called her mixed magic a blight long before the war ended, and the disdain for rank never fully faded.</p></div>
+          <div class="trait-item"><div class="trait-item-label">Racial</div><p>Celestine-half magic runs measurably weaker on ground where the Hollowing's light was spent hardest, the Hollowlands chief among them, since that light was drained there and has never fully recovered.</p></div>
+          <div class="trait-item"><div class="trait-item-label">Physical</div><p>Not invincible. A sufficiently severe wound kills her exactly as it would anyone else, and every ability she has draws from a finite pool of energy in a fight rather than an unlimited one.</p></div>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="field"><div class="field-label">Hobbies</div><div class="field-value">Hunting Adonai-Vel relics, appraising old craftsmanship, solo travel, chasing adrenaline</div></div>
+        <div class="field"><div class="field-label">Fears</div><div class="field-value">Adonai-Vel disappearing entirely; letting someone close enough to actually break her</div></div>
+        <div class="field"><div class="field-label">Core Values</div><div class="field-value">Loyalty to her people's memory, quiet integrity, discipline over sentiment</div></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="subhead">Inventory</div>
+      <div class="info-grid">
+        <div class="field"><div class="field-label">Weapon</div><div class="field-value">Vel'kaesh, greatsword &mdash; detailed further below</div></div>
+        <div class="field"><div class="field-label">Magical Item</div><div class="field-value">None separate from Vel'kaesh</div></div>
+        <div class="field"><div class="field-label">Other Equipment</div><div class="field-value">Travel gear for any climate, one formal gown, coin carried without much concern</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="history">
+    <div class="section-head"><span class="section-num">II.</span><h2 class="section-title">History</h2></div>
+    <div class="story">
+      <p>She was born twenty years into a war that had already forgotten peace. Adonai-Vel raised its children fast, and for one purpose. Nobody born with her blood got a soft year in that city. Her people were losing ground in those first two decades, taking what small victories they could while they learned, one battle at a time, that heaven's might couldn't actually be matched. By the time she could walk, they'd stopped fighting to win and started praying for a miracle to turn the tide.</p>
+      <p>She held a wooden practice sword before she could write her own name. By six she was sparring nine-year-olds and losing badly, and the beatings taught her something useful: how to take pain and keep going, the way a soldier has to. By twelve she was winning, and the instructors started watching her. After that: more drills, more hours, older soldiers to lose against, again and again, until the losing stopped.</p>
+      <p>Nobody asked if she wanted any of it. Nobody needed to. Her eyes said everything a recruiter would have wanted to hear anyway: a killer, honed young. The war wanted soldiers and it was going to get them, one exhausted, bruised, relentless child at a time, and she turned out good at becoming exactly what it needed.</p>
+      <p>One drill-master kept her back after a brutal training session, watching her get back up faster than anyone else in her cohort. He could see something in the way she moved, the way she fought: that she was ready to stop holding her two halves apart and let them run together, the thing most Nephilim spent their whole lives avoiding, as if mixing the blood was a blight rather than a gift. The strongest ones learned to embrace it anyway. He started keeping her back in the evenings after that, drilling her in it, pushing her further as the two sides of her blood learned to move as one.</p>
+      <p>Once she stopped fighting it, it came to her easier than breathing. Her officers noticed and started dragging younger soldiers over to watch her spar, less as praise than as a threat: this is possible, so stop being lazy. The nobles called it a blight all the same and treated her accordingly, even as their own children never came within reach of matching her.</p>
+      <p>She spent her twenties, thirties, and forties in the unglamorous parts of the war nobody wrote down: years-long sieges against angelic positions, border raids, river crossings held a night longer than they should have held. A retreat she covered alone at thirty-one bought a column of wounded soldiers enough time to reach a treeline. She walked out of the ambush two hours later drenched in blood that wasn't hers, breathing hard, something closer to bloodlust than relief still sitting in her eyes. The soldiers she'd just saved watched her pass in silence. Nobody thanked her for that one.</p>
+      <p>She won more than she lost. In a hundred-year war against something that doesn't tire, that's already close to a miracle. By eighty she commanded a full regiment and held a rank the nobles could no longer argue with, whatever they still privately called what had earned it for her.</p>
+      <p class="beat">Then came the last push.</p>
+      <p>Heaven came at the capital from every direction at once, more of them than any drill had prepared the wall's watch to expect. Marasa'n's regiment held a flank just outside the walls: the unglamorous work of keeping one stretch of a dying line from folding while the people who mattered defended the throne room further in. The first wave broke before the horns finished sounding, ranks of angels advancing behind shields rimmed in white fire, wings folded tight against their backs to cut the wind resistance of a full run.</p>
+      <p>She met the front rank at the ditch line rather than waiting for it to reach the earthworks, closing the gap before their formation had finished setting. Her first swing took the lead angel through the collarbone before his shield came fully up. The second attack came from a blade she never saw start its swing, and she read it in his shoulders a half-second before his arm moved, the same tell she'd been trained to watch since she was twelve, and turned it aside on the flat of her blade rather than losing time to a full parry. She didn't stop moving. Standing still in that kind of press was its own kind of dying.</p>
+      <p>Her style kept the angels guessing: Vashtara's weight went into every blow that connected, enough force behind an ordinary greatsword swing to put an angel down through his own shield. Celestine's speed carried her between them faster than armored infantry could track, closing a gap, taking an opening, moving again before a second attacker could commit. Angels who'd trained their whole lives against one kind of magic or the other kept flinching at the wrong half a half-second too late. That half-second was the whole fight, most days. They hadn't expected it either. Almost nobody outside Adonai-Vel ever did.</p>
+      <p>An hour in, a knight-captain broke off from the second wave and came for her personally, marked out by the soldiers around her who'd started giving her more room than the line could actually afford. He fought clean and fast, good enough that she had to actually work for the first time since the ditch line, and he nearly opened her left arm on a reverse cut she read a beat too late. Her magic answered before she consciously called it, pulsing through a single swing of raw, indiscriminate force that cut clean through the knight-captain and tore a hole through one of his entourage standing behind him.</p>
+      <p>Soldiers fell on both sides of her all afternoon, hers more than she wanted and theirs enough to matter. She held ground rather than gained it, which was the entire assignment, and she held it past the point her arms should have given out, past three separate wounds that should have pulled her out of the line entirely. Command had told her to keep the flank from folding for as long as the throne room needed her to. She didn't know how long that would be. She simply didn't stop. Her flank held to the end. It just stopped mattering by the time it did.</p>
+      <p class="beat">The Heavens' Final Descent.</p>
+      <p>She was close enough to see it happen. Light thrown down from a ruptured sky, more of it than any single defense could survive, striking the heart of a nation that had spent a hundred years convincing itself it had earned the right to stand as heaven's equal. She watched her capital die from just outside its own walls, close enough that the light caught the edge of her vision and told her exactly what she was looking at before her mind had finished processing it.</p>
+      <p>She spent the next two days pulling survivors out of rubble that used to be a city, working past the point where her body should have given out. Nothing could have kept her still after watching her civilization's final breath snuffed out in a torrent of light from the heavens.</p>
+      <p>Two days became weeks. Someone had to get the survivors moving away from a ruin that could still kill them with a strong wind and a bad slope, and there was nobody left with a higher rank willing to do it, so she took the mantle herself. She turned a scattering of burned, starving, directionless people into something that functioned: watch rotations through the night, water parties sent to whatever streams hadn't been fouled, a rough count of the living kept in her own head because there was no clerk left alive to keep it properly. She gave orders to people who'd outranked her a month earlier, because giving orders was the only thing keeping either of them upright.</p>
+      <p>Nobody organized the exile that followed. It didn't need organizing. What was left of Adonai-Vel had nowhere left to be a nation, and once her makeshift camp had held long enough for people to manage on their own, its survivors walked away from the wreckage in every direction. Whatever hope any of them had left, they'd decided it lay elsewhere. Regrouping meant risking heaven's attention a second time, and none of them were willing to test whether it would come back. They stayed broken and scattered instead, and called it survival.</p>
+      <p>She didn't let herself grieve while any of that was happening. There wasn't room for it. Grief was a thing you did once everyone else was safe, and everyone else kept not being safe for months at a stretch, so she postponed it the same way she'd been taught to postpone exhaustion and hunger and pain since she was old enough to hold a blade. By the time the last of her people had scattered far enough to manage without her, there was nobody left standing close enough to notice her finally stop.</p>
+      <p>She howled for weeks after that, watching what was left of her city still burning, while everyone with the sense left to do it had already gone to gather up whatever remained of their lives. Her isolation from the rest of the bloodline took years to fully settle in. It was years more before she found her own way to carry Adonai-Vel forward, not by rebuilding it, but by holding onto whatever pieces of it she could still find and keep.</p>
+      <p class="beat">Not once, in nine hundred years.</p>
+      <p>What she did in the months after, she doesn't talk about either. What matters is that she survived it, and the survival came with nothing attached. No home to return to. No throne to serve. Just a very long life, suddenly, stretching out in front of her with nothing in it worth naming.</p>
+      <p>Two centuries passed before she found anything that felt like it belonged to her again.</p>
+      <p>She wasn't looking for it, which still makes her laugh on the rare occasions she's honest about this memory. She'd been drifting through the empty places her people left behind, half grief and half boredom, when she found the ruin of a military outpost so forgotten even the war had lost track of it. It fell early, decades before the fighting reached the capital, and nobody had touched it since.</p>
+      <p>Buried under what used to be an armory roof, she found a blade unlike anything she'd carried before. It answered the moment her hand closed around the grip, shifting between a light form and a dark form depending on which half of her she called into it, the metal itself changing color rather than just some glow sitting on top of it. She named it after the only word from the old tongue she considered worthy of its history.</p>
+      <p>Vel'kaesh. It hasn't left her side since. She has never fully explained, even to herself, why finding it felt like coming home when nothing else had come close in two hundred years.</p>
+      <p>The centuries after that blur together on purpose. She tells herself that's just what happens to memory once there's enough of it to carry, and maybe that's even true. What's certain is that she kept moving, kept fighting, kept chasing anything Adonai-Vel had left scattered across the world, and built a trail of half-true legends behind her without ever meaning to.</p>
+
+      <p class="beat">The Docks</p>
+      <p>The docks came first, in a fishing town whose name she's let herself forget. Raiders hit before dawn, the kind after boats, stores, and whatever coin the harbor kept in its one strongbox. Half the crew was already ashore before anyone raised an alarm. She was passing through on a hunch about an old trade route, sleeping rough near the water, and the noise woke her before the first scream did.</p>
+      <p>She skipped the alarm bell and the town watch and went straight for the boats. Whatever the raiders expected that night, it wasn't a woman walking out of the dark with a blade already drawn, closing the distance before any of them finished drawing steel. By the time the watch arrived, there was nothing left to do. What they found afterward didn't read as a fight so much as a lesson: wounds cut with a precision that had nothing frantic about it, for all how fast it must have happened.</p>
+      <p>She refused every reward the harbor master offered and asked one question: did anyone recognize a design carved into a chest the raiders had been hauling toward their ship. Nobody did. She checked it herself, confirmed it wasn't what she was looking for, and was gone before sunrise. The sailors still tell it as a ghost story more than a war story. She was never quite either.</p>
+
+      <p class="beat">The Mountain Road</p>
+      <p>The mountain road came next, months later and a long way inland. A trade caravan was crossing a pass that had held for a hundred years without incident, the same afternoon Marasa'n happened to be crossing it too. The slope let go all at once: rock and loose scree, enough weight to bury the whole caravan before anyone could turn the horses.</p>
+      <p>She didn't outrun it. She planted herself between the caravan and the slope, drove Vashtara's half into the ground through both palms, and held the collapse long enough for it to matter. Miners still argue about what they watched: some say the rockface simply stopped, others that the stone flowed around her rather than through her. Either way, nobody in that caravan died, and all of them owed it to a stranger who hadn't said a word since she arrived.</p>
+      <p>She held the pass open until the caravan cleared it, then let the rest of the slope fall behind them, sealing the road she'd now have to find another way around. Nobody caught her name, just the sword she carried, unlike any smithing the local miners had seen, gone before anyone thought to ask where she was headed.</p>
+
+      <p class="beat">The Antiques Shop</p>
+      <p>The antiques shop came third, in a market town with more secondhand relics passing through it than any dealer could properly authenticate. Marasa'n found a dented old gauntlet in a bin priced as scrap, old Adonai-Vel make if she'd ever seen it, and paid the asking price without haggling. The dealer remembers being surprised. Most customers argued on principle.</p>
+      <p>She came back a week later, not to buy. She'd found two more pieces from the same set among other collectors, obvious forgeries once she'd handled the genuine article, both sold out of his shop under the same provenance. She laid it out for him calmly, without raising her voice, which made the conversation worse than shouting would have.</p>
+      <p>He hasn't sold a fake since, not entirely out of fear. He tells people the pale-eyed woman who came back that week knew more about Adonai-Vel relics than any scholar he's dealt with, and that he'd rather lose a sale than see her a third time. He still has no idea who she was.</p>
+
+      <p class="beat">The Border Garrison</p>
+      <p>The border garrison came last. By the time word of it traveled, most details had gone strange in the retelling. What's agreed on: a garrison under siege for six days, walls holding but supplies not, went to sleep on the seventh night still surrounded and woke on the eighth with its gates standing open from the inside.</p>
+      <p>Every officer commanding the siege lay dead, slaughtered in their sleep, killed quietly enough that the camp around them never woke. Nobody at the garrison could explain how one person got through a siege line, did that much damage, and got out again before dawn. The one surviving account describes a woman standing just inside the gate at first light, greatsword sheathed, waiting only long enough to confirm the garrison would hold before walking back out through the gap she'd made.</p>
+      <p>She asked for nothing. She gave no name, no explanation, and no time for anyone to organize the thanks the garrison spent the next week trying to arrange. By the time a rider caught up to the road she'd taken out of the valley, there was no one left on it to thank.</p>
+
+      <p>None of them know it was the same woman.</p>
+      <p>None of them know she's still out there, still doing more or less the same thing, for more or less the same reasons she started.</p>
+      <p>Somewhere in those centuries she stopped counting something else too: the people she let herself get close to, and how fast she had to watch them go. Ten years reads to her like a stopover, barely long enough to wear in new boots. She's watched it swallow a mortal's entire life, first steps to last breath, while she was still unpacking.</p>
+      <p>A friend made over a shared fire and a shared fight could be dead of old age before she'd finished the errand that brought her to their town. A companion she genuinely loved could live a full life beside her, marry, raise children, grow old and grey, and be gone before she'd started to feel the years pass. She learned, slowly and at real cost, to love people anyway, and to watch every one of them go.</p>
+      <p>She doesn't talk about that either, though it explains more about her than the war does. Most days it's easier to keep moving before anyone gets close enough to become one more name she'll have to outlive. It's also exactly why she keeps doing it anyway. Standing still long enough to build something with someone means agreeing to bury them, and she still hasn't decided if that's a price worth paying or a debt she's too stubborn to stop taking.</p>
+      <p>She arrived in Velaris like she arrives everywhere: quietly, with nothing waiting for her, and no plan to stay.</p>
+      <p>Fifty-odd years into her time there, she did something she hadn't managed anywhere else in eight centuries. She decided to make a home.</p>
+      <p>She opened a shop in the capital, a narrow storefront a few doors down from the portal crossing to Auralith, and started selling what centuries of hunting relics had actually taught her: how to appreciate and evaluate what's real. Half-Light Antiquities deals in provenance she can verify herself, instruments, jewelry, ledgers, the occasional weapon or piece of armor too well made for the century it's dated to. Wealthy collectors from both sides of the portal find their way to her counter eventually. What never crosses it, no matter the offer, is anything that was actually Adonai-Vel's. Those pieces she keeps in rooms above the shop that no customer has ever seen.</p>
+      <p>She still leaves for months at a time when a real lead surfaces, locking the door and trusting the street not to ask questions it already knows better than asking. She always comes back. Fifty years is nothing against nine centuries, but it's the longest she's kept anything in one place since the Hollowing, and she still isn't entirely sure what to make of that.</p>
+      <p>What she's noticed, and hasn't said aloud to anyone, is that it's easier than she expected. A shop doesn't age the way a friend does. She can care about the work, even about the handful of regular customers who've become something like familiar to her, without the arithmetic that usually stops her from staying anywhere at all. It doesn't replace what she lost. It's the closest she's let herself get to keeping something since.</p>
+    </div>
+  </section>
+
+  <section id="doctrine">
+    <div class="section-head"><span class="section-num">III.</span><h2 class="section-title">How She Fights</h2></div>
+    <p class="doctrine-lede">She fights the way Adonai-Vel trained her to: forward, fast, and built to end things quickly. She closes distance immediately and keeps pressing until the fight is over. Centuries removed from the war, this is still the only way she fights.</p>
+    <div class="doctrine-body">
+      <p>She uses a wide, low stance built for a two-handed blade that outweighs most opponents' entire kit, and keeps her weight forward rather than back, so a parry becomes the start of her next swing instead of a stop. She reads an opponent's hips and shoulders rather than their weapon hand: a feint shows in the hips first, and a real strike shows in the shoulders a half-second before the arm moves. Against a group, she holds a position where her blade's arc threatens two opponents at once and times her swings to force the rest into each other's space.</p>
+      <p>Vel'kaesh is heavier than a blade her size should manage one-handed for long, and she compensates with rotation rather than raw arm strength: full-body turns that carry the next swing off the last one's momentum instead of muscling through it fresh. That technique works with or without magic behind it. What her magic adds on top of it is force beyond her own muscle, speed beyond her frame's normal limits, and enough continued output to keep fighting through injuries that would stop her otherwise.</p>
+    </div>
+    <div class="subhead">Five Ways She Channels It</div>
+    <div class="ability-list">
+      <div class="ability"><div class="ability-name">Weight of the Fall</div><p>She channels Vashtara's half directly into a single strike as it lands, adding force her muscles alone can't generate. It cuts through plate and warded steel a normal blow wouldn't scratch. The edge darkens for the instant the strike connects, then clears again.</p></div>
+      <div class="ability"><div class="ability-name">Herald's Speed</div><p>She channels Celestine's half into her legs for a two-to-three-step burst, closing distance faster than an opponent can reset their stance. She uses it to open an exchange. It costs her almost nothing to trigger and rarely runs longer than the first three swings need.</p></div>
+      <div class="ability"><div class="ability-name">Umbral Step</div><p>She channels Vashtara's half into a single step timed to the exact moment a blow would land, shifting her position enough that the strike passes through the space she just left. It replaces a dodge or a parry outright. She uses it against a hit she has no other way of clearing in time.</p></div>
+      <div class="ability"><div class="ability-name">Seraph's Ward</div><p>She channels Celestine's half into a flat wall of light angled to catch one incoming attack rather than shield her from every side. It absorbs that one blow directly, and costs her more to hold than Umbral Step does, so she raises it only when stepping clear isn't possible.</p></div>
+      <div class="ability"><div class="ability-name">Stubborn Mending</div><p>She keeps a low, constant channel of Celestine's half running under an open wound, slowing the bleeding and holding an otherwise fight-ending injury at a level she can keep moving on. It doesn't close the wound or restore anything she's already lost. It buys her time before the wound needs real treatment.</p></div>
+    </div>
+    <div class="subhead">Two She Holds in Reserve</div>
+    <div class="finishers">
+      <div class="finisher light"><div class="finisher-name">The Halo Fall</div><p>She channels as much of Celestine's half as she can hold at once, enough that the golden halo forms fully behind her head, then releases all of it down Vel'kaesh's edge in a single overhead strike. The strike carries the same kind of concentrated light the Seraphim used to end Adonai-Vel, at a far smaller scale. Holding that much of Celestine's half open leaves her exposed for the two or three seconds it takes to release it, which is why she uses it rarely. Whatever it hits, it ends.</p></div>
+      <div class="finisher dark"><div class="finisher-name">Vashtara's Reckoning</div><p>She channels Vashtara's half at full output and holds the channel open instead of releasing it in one strike, shifting Vel'kaesh fully into its dark form and driving a continuous series of full-weight blows rather than a single one, each landing heavier than the last as the channel builds. She uses it once precision has already failed and the fight calls for sustained damage over accuracy.</p></div>
+    </div>
+  </section>
+
+  <section id="skills-card">
+    <div class="section-head"><span class="section-num">IV.</span><h2 class="section-title">The Skills Card</h2></div>
+    <p class="doctrine-lede">The mechanical breakdown behind Section III: two Basic, two Intermediate, two Advanced, and two Ultimate abilities, alongside one daily-use utility ability and one passive.</p>
+
+    <div class="skill-tier-head">Daily Use</div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Relic Sense</div><div class="skill-tag">Utility</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>1 post</strong></span><span class="stat-chip">Energy <strong>10%</strong></span><span class="stat-chip">Active <strong>2 posts</strong></span><span class="stat-chip">Cooldown <strong>2 posts</strong></span></div>
+      <p>She channels a thin trace of Celestine's half through her open palm and lets it search rather than strike, tuned specifically to Adonai-Vel metalwork rather than any general magic. A faint gold warmth rises along her palm, growing hotter the closer she moves to something the old smiths actually made. It gives direction and rough proximity only, never an exact location.</p>
+      <p class="example"><span class="example-tag">Example</span>She walks through a market in the Hearthstone district, letting her palm hover an inch above a table of secondhand ironwork. The warmth builds slowly against three ordinary blades and stays cold against a locked chest two stalls down. She keeps moving until it flares hot near a cracked shield propped against a post. She buys it before the vendor can even name a price, checks the maker's mark under the rim, and confirms it by touch. It's a near match to work she's carried before, close enough to be worth the coin. She logs the location in her head and moves on to the next stall before anyone asks why she stopped.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Only registers maker-signatures she's personally encountered; a genuine piece from a smith she never met registers as nothing. Requires bare skin within a short distance, so gloves or a locked case force her closer than she'd like. Tells her nothing about danger, curses, or ownership, only make.</p>
+    </div>
+
+    <div class="skill-tier-head">Basic</div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Weight of the Fall</div><div class="skill-tag">Combat</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>0 posts</strong></span><span class="stat-chip">Energy <strong>15%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>1 post</strong></span></div>
+      <p>Channels Vashtara's half directly into a single swing as her blade connects, adding force her muscles alone can't generate. Strong enough to punch through plate or a warded shield that would stop an ordinary blow. Her default answer to anything heavily armored.</p>
+      <p class="example"><span class="example-tag">Example</span>She meets a plated soldier holding a line she needs broken fast. Her first swing lands clean across his raised shield, and Vashtara's force punches straight through the metal instead of stopping at it. The shield splits down the center and the soldier staggers back, his guard broken along with it. She follows the opening immediately, before he resets his footing. The strike costs her only a fraction of her reserve, so she keeps it available for exactly this kind of armored problem. Two more swings like it would still leave her plenty for the rest of the fight.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Only lands where the blade connects, so a clean dodge defeats it outright. Adds no extra speed or reach. Costs enough that she rarely stacks it more than two or three times in one exchange.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Herald's Speed</div><div class="skill-tag">Combat</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>0 posts</strong></span><span class="stat-chip">Energy <strong>10%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>1 post</strong></span></div>
+      <p>Channels a short burst of Celestine's half into her legs, compressing several strides into a fraction of a second. Built purely for closing distance, typically used to open an exchange before an opponent sets their stance. Costs almost nothing to call up.</p>
+      <p class="example"><span class="example-tag">Example</span>An ambush breaks from the treeline thirty feet out, more distance than she wants to give an armed opponent. She calls Celestine's half into her legs and closes that gap in under a second, faster than the lead attacker can finish drawing his blade. Her boots leave a thin trail of pale light behind her for a moment before it fades. She reaches him already inside his guard, her sword already committed to the first swing of the exchange. The burst itself does nothing to hurt him. It just gets her close enough that her actual swordsmanship can.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Only moves her in a straight line. No defensive benefit while active. Using it without a follow-up attack just burns energy for no return.</p>
+    </div>
+
+    <div class="skill-tier-head">Intermediate</div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Umbral Step</div><div class="skill-tag">Defense</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>0 posts</strong></span><span class="stat-chip">Energy <strong>20%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>2 posts</strong></span></div>
+      <p>Channels Vashtara's half into a single instantaneous step timed to a blow she has no time to block or outrun, shifting her out of the space she occupied a half-second earlier. Replaces a dodge or parry outright, and works even against attacks faster than her body could react to.</p>
+      <p class="example"><span class="example-tag">Example</span>A spear thrust comes in low and fast, faster than she can parry cleanly with Vel'kaesh's weight already committed elsewhere. She channels Vashtara's half into a single step exactly as the tip reaches her, and the spear passes clean through the space she occupied a half-second earlier. To the spearman, it looks like she simply wasn't where his weapon expected her to be. The repositioning carries her only a stride, not far enough to pull her out of the exchange entirely. She doesn't use it on every incoming strike, since two posts have to pass before she can call it again. She reserves this one for hits that would otherwise land clean and take her out of the fight for good.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Only counters a single incoming attack. Requires her to recognize the attack early enough to trigger it. The two-post cooldown means she can't lean on it against a barrage.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Seraph's Ward</div><div class="skill-tag">Defense</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>0 posts</strong></span><span class="stat-chip">Energy <strong>25%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>2 posts</strong></span></div>
+      <p>Channels Celestine's half into a flat wall of solid light thrown up to catch one specific incoming attack. Appears instantly and holds firm long enough to absorb the full force of a single blow, stopping it outright rather than deflecting it. Raised only when stepping clear isn't possible.</p>
+      <p class="example"><span class="example-tag">Example</span>A charging opponent commits to a two-handed overhead swing she has no time to dodge or block conventionally. She throws up a flat plane of gold light directly in front of her, angled to catch that one blow head-on. The strike lands against the ward instead of her collarbone, and the light absorbs the full weight of it without her taking a step back. It fades the instant the impact is spent, leaving nothing behind for whatever comes next. She raises it only in that kind of moment, since it costs more than simply stepping aside would. A follow-up strike immediately after would have gone straight through, so she moves the instant it drops.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Only shields the direction she's facing. Built to absorb one hit, not several. Cost and cooldown mean she can't raise it back to back against a sustained assault.</p>
+    </div>
+
+    <div class="skill-tier-head">Advanced</div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Stubborn Mending</div><div class="skill-tag">Healing</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>0 posts</strong></span><span class="stat-chip">Energy <strong>35%, held</strong></span><span class="stat-chip">Active <strong>up to 3 posts</strong></span><span class="stat-chip">Cooldown <strong>3 posts</strong></span></div>
+      <p>Opens a thin, constant channel of Celestine's half directly into an open wound, slowing blood loss and holding an otherwise fight-ending injury at a level she can keep fighting through. Doesn't close the wound or restore anything already lost, only keeps it from getting worse while held open.</p>
+      <p class="example"><span class="example-tag">Example</span>A blade opens a deep gash across her side mid-fight, the kind of wound that would force most soldiers to disengage. She opens a steady channel of Celestine's half directly into it, holding the bleeding at a level she can keep fighting through. The channel stops the wound from getting worse without closing it or dulling the pain. She keeps fighting for two more posts with the channel held open, watching her reserve drop the entire time. Once the fight ends, she lets it go, and the wound resumes bleeding exactly as badly as it would have without the ability. She still needs a proper healer or a few days of rest to actually close it.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Buys time rather than treating the injury; still needs real treatment afterward. Competes directly with her other abilities for the same energy pool. Does nothing for an injury that isn't actively bleeding.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Twinned Edge</div><div class="skill-tag">Combat</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>1 post</strong></span><span class="stat-chip">Energy <strong>40%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>3 posts</strong></span></div>
+      <p>Channels both halves of her bloodline into a single strike at once, running Vashtara's raw force and Celestine's precision through the same swing simultaneously. The blade carries a visible split along its edge, gold on one side and near-black on the other. Lands with both the weight of a full-force blow and the speed and accuracy of a burst strike.</p>
+      <p class="example"><span class="example-tag">Example</span>She faces an opponent skilled enough that neither raw force nor pure speed alone has broken their guard. She opens both channels at once, holding for a full post while Vashtara's force and Celestine's precision build together through Vel'kaesh. The blade visibly splits along its edge, gold bleeding into black, before she releases it in a single strike. It lands with the weight of her hardest blow and the accuracy of her fastest one, and this time it gets through. Her opponent nearly interrupts her during the channeling window, close enough that she commits the rest of her focus to holding it steady instead of defending herself. She doesn't call on it again for three posts afterward, since it draws too much from her reserve to repeat right away.</p>
+      <p class="weak"><strong>Weaknesses:</strong> The one-post channeling window is a visible tell an opponent can interrupt. Taking a hit during that window collapses the technique and wastes the energy already spent. Heavy enough on her reserve that she can typically only manage it once or twice per encounter.</p>
+    </div>
+
+    <div class="skill-tier-head">Ultimate</div>
+    <div class="skill-card tier-ultimate">
+      <div class="skill-head"><div class="skill-name">The Halo Fall</div><div class="skill-tag">Combat</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>2 posts</strong></span><span class="stat-chip">Energy <strong>70%</strong></span><span class="stat-chip">Active <strong>1 post</strong></span><span class="stat-chip">Cooldown <strong>6 posts</strong></span></div>
+      <p>Draws as much of Celestine's half as she can hold, enough that her golden halo fully manifests, then releases the entire charge down Vel'kaesh's edge in a single overhead strike, a smaller-scale echo of the light the Seraphim used to end Adonai-Vel. Whatever it connects with, it ends outright.</p>
+      <p class="example"><span class="example-tag">Example</span>Losing ground against something powerful enough to justify the cost, she plants her feet and starts drawing Celestine's half all the way up. The halo forms fully behind her head over the next two posts while she stands still, glowing, and unable to dodge or block anything thrown at her in return. Her opponent gets two full posts to close in or interrupt her, and if they don't, the strike comes down the instant the charge completes. The light that leaves Vel'kaesh's edge in that moment is bright enough to end whatever it hits outright. She's spent nearly three-quarters of her reserve the moment it lands, win or lose. She doesn't call on it unless the fight has already gone past the point normal abilities can settle it.</p>
+      <p class="weak"><strong>Weaknesses:</strong> The two-post charge is the longest window she has, and she's essentially defenseless while building it. Leaves her running on fumes afterward regardless of whether it connects. Six-post cooldown means she can't use it again for the rest of most fights.</p>
+    </div>
+    <div class="skill-card tier-ultimate">
+      <div class="skill-head"><div class="skill-name">Vashtara's Reckoning</div><div class="skill-tag">Combat</div></div>
+      <div class="stat-row"><span class="stat-chip">Prep <strong>1 post</strong></span><span class="stat-chip">Energy <strong>65%</strong></span><span class="stat-chip">Active <strong>up to 3 posts</strong></span><span class="stat-chip">Cooldown <strong>6 posts</strong></span></div>
+      <p>Holds Vashtara's channel open instead of releasing it in one strike, shifting Vel'kaesh fully into its dark form and driving continuous, escalating blows rather than a single one, each landing heavier than the last as the channel builds. Built for a fight that's already gone past the point a single clean strike could end.</p>
+      <p class="example"><span class="example-tag">Example</span>A fight drags on long enough that no single clean strike is going to finish it. She lets Vashtara's half build instead of releasing it, shifting Vel'kaesh fully into its dark form and swinging without pause for accuracy. Each blow in the sequence lands heavier than the last as the channel keeps escalating underneath it. She commits everything to landing those blows and takes a hit in return she has no way to defend against while it runs. By the third post, the sequence has done enough damage that whatever's left standing rarely stays that way for long. Once it ends, the built-up force releases all at once, and she has nothing left to call on again for six posts.</p>
+      <p class="weak"><strong>Weaknesses:</strong> Offers essentially no defense of her own while the sequence runs. Interrupting her early, before the force builds, denies most of the technique's power. Six-post cooldown and heavy draw make it a once-per-fight commitment.</p>
+    </div>
+
+    <div class="skill-tier-head">Passive</div>
+    <div class="skill-card">
+      <div class="skill-head"><div class="skill-name">Longevity</div><div class="skill-tag">Passive</div></div>
+      <p>Ages at a fraction of a mortal rate and recovers from ordinary wounds faster than her body should allow, without consciously channeling anything. Not true immortality: a wound severe enough kills her the same as it would anyone else, and it heals nothing already lost to time or old injury. Runs constantly in the background and costs her nothing.</p>
+      <p class="example"><span class="example-tag">Example</span>A wound that would have scarred her a century ago closes clean within days, with nothing left behind to show for it. She doesn't notice this happening in the moment. It simply runs in the background the way it always has, whether she's resting after a fight or walking away from one uninjured. A companion she traveled with for a decade shows the years plainly by the time she sees them again. She hasn't visibly aged at all since long before that decade started. It costs her nothing to maintain, and she rarely thinks about it unless someone else brings it up first.</p>
+    </div>
+
+    <div class="skill-lists">
+      <div>
+        <div class="subhead">Physical Combat Skills</div>
+        <ul class="aside-list">
+          <li>Greatsword mastery &mdash; centuries drilling with Vel'kaesh, using rotation and momentum rather than raw arm strength.</li>
+          <li>Tell-reading &mdash; reads an opponent's hips and shoulders rather than their weapon hand.</li>
+          <li>Multi-opponent positioning &mdash; holds a line that threatens two enemies at once.</li>
+          <li>Battlefield command &mdash; commanded a full regiment during the war; still gives orders instinctively under pressure.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="subhead">Non-Combat Skills</div>
+        <ul class="aside-list">
+          <li>Old-tongue literacy &mdash; reads and speaks fragments of Adonai-Vel's old language, pieced together on her own over centuries. A handful of lineage-keepers still speak it whole and guard the teaching closely. She has never been one of them.</li>
+          <li>Relic appraisal &mdash; tells genuine Adonai-Vel craftsmanship from a forgery on sight or by touch.</li>
+          <li>Survival and wayfinding &mdash; nine centuries of solo travel across every kind of terrain.</li>
+          <li>Understated wealth management &mdash; sits on considerable money without needing to manage it actively.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="attire">
+    <div class="section-head"><span class="section-num">V.</span><h2 class="section-title">Field Record: Attire</h2></div>
+    <p class="lede2">Two faces of the same woman, kept a continent and a lifetime apart from each other. One dresses down on purpose. The other still carries her nation on her back.</p>
+    <div class="plates">
+      <div class="plate">
+        <div class="plate-img"><img src="formal.png" alt="Marasa'n dressed formally in an off-shoulder gown, muscular build and unblemished pale skin visible."></div>
+        <div class="plate-body">
+          <div class="plate-tag">Formal Dress</div>
+          <div class="plate-name">Off the Clock</div>
+          <p>Money she doesn't organize her life around buys her a wardrobe she rarely needs. When an occasion calls for it, she wears it like she's worn everything else for nine hundred years: like it costs her nothing.</p>
+        </div>
+      </div>
+      <div class="plate">
+        <div class="plate-img"><img src="armor.png" alt="Marasa'n in full Adonai-Vel battle armor, dark blue-black plate with gold filigree, hood raised, eyes wrapped in ceremonial cloth, a golden halo behind her head, greatsword across her back."></div>
+        <div class="plate-body">
+          <div class="plate-tag">Battle Dress</div>
+          <div class="plate-name">The Old Style</div>
+          <p>Dark blue-black plate worked through with gold, feathered wings at the shoulders, script along the collar no one in Velaris can read. The cloth over her eyes is ceremonial, not practical. She's never said what it costs her to see through it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="relic">
+    <div class="section-head"><span class="section-num">VI.</span><h2 class="section-title">The Relic She Carries</h2></div>
+    <div class="relic-media">
+      <img src="blade.png" alt="Vel'kaesh, a clean white and silver greatsword with a compact crossguard, small blue gems, ribbons, and floating shards of metal along the blade.">
+    </div>
+    <div class="relic-copy">
+      <h3 class="relic-name">Vel'kaesh</h3>
+      <div class="relic-sub">Recovered from a lost outpost, two hundred years after the Hollowing</div>
+      <p>Adonai-Vel's smiths worked gold and dark silver into the same pieces the way its architects did, but most of that work never went past the surface. A small caste of smiths, never more than a handful of names at once, learned to infuse both magics into the metal during the forging itself. Vel'kaesh is one of the last true examples of that craft still standing anywhere.</p>
+      <p>It answers whichever half of her inheritance she calls on, shifting form rather than resisting it. Ordinary dual-worked steel fatigues under that kind of contradiction and eventually fails. Vel'kaesh releases the stress as transformation instead of damage. It has never once failed her, in a career built on the assumption that it eventually will.</p>
+      <p>She named it after the only word from the old tongue she considered worthy of its history. No smith she's found since, in Velaris or anywhere past it, can explain how the transformation works. She's had over six centuries to decide that not understanding it isn't the same as not trusting it.</p>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="section-head"><span class="section-num">VII.</span><h2 class="section-title">Half-Light Antiquities</h2></div>
+    <p class="doctrine-lede">A little over fifty years into her time in Velaris, she did something she hadn't managed anywhere else in eight centuries. She decided to make a home.</p>
+    <div class="info-grid">
+      <div class="field"><div class="field-label">Location</div><div class="field-value">Velaris Capital, near the Auralith portal crossing</div></div>
+      <div class="field"><div class="field-label">Specialty</div><div class="field-value">Verified old-world antiques &mdash; never Adonai-Vel's own</div></div>
+      <div class="field"><div class="field-label">Runs the Counter</div><div class="field-value">Perrin Oswitt, in her absence</div></div>
+    </div>
+    <div class="doctrine-body">
+      <p>Half-Light Antiquities deals in provenance she can verify herself: instruments, jewelry, ledgers, the occasional weapon or piece of armor too well made for the century it's dated to. Wealthy collectors from both sides of the portal find their way to her counter eventually. What never crosses it, no matter the offer, is anything that was actually Adonai-Vel's. Those pieces she keeps in rooms above the shop that no customer has ever seen. She keeps loose, practical ties to a few of the couriers working Auralith's Underground Tunnels too, since black-market relic traffic reaches her faster through them than through any honest auction house.</p>
+      <p>She still leaves for months at a time when a real lead surfaces, locking the door and trusting the street not to ask questions it already knows better than asking. She always comes back. Fifty years is nothing against nine centuries, but it's the longest she's kept anything in one place since the Hollowing.</p>
+      <p>What she's noticed, and hasn't said aloud to anyone, is that it's easier than she expected. A shop doesn't age the way a friend does. She can care about the work, even about the handful of regular customers who've become something like familiar to her, without the arithmetic that usually stops her from staying anywhere at all. It doesn't replace what she lost. It's the closest she's let herself get to keeping something since.</p>
+    </div>
+  </section>
+
+  <section id="unspoken">
+    <div class="section-head"><span class="section-num">VIII.</span><h2 class="section-title">What She Hasn't Said</h2></div>
+    <div class="aside-panel">
+      <span class="aside-tag">Held, Not Played</span>
+      <p>Traces of Adonai-Vel, wherever they surface, are what keep her moving. She hasn't told anyone in Velaris yet, but she already knows something most of the Empire doesn't: the ruin the Hollowlands call the Precipice Realm, Ashura's ruin, the one with the Late King's abandoned study and the unexplained Hell Gates, is Adonai-Vel. Her Adonai-Vel. She was there the day it happened. She hasn't decided whether to say so, to whom, or what she wants from confirming it beyond the confirmation itself.</p>
+      <ul class="aside-list">
+        <li>Unresolved on whether Adonai-Vel deserved the Hollowing. Hasn't decided, and dislikes being asked, which is a harder question for her than for most survivors since she was one of the soldiers fighting to keep it standing.</li>
+        <li>Has not set foot on that ground since the day she survived it. Knows the ruin is close now that she's in Velaris. Hasn't gone.</li>
+        <li>No one in Velaris currently has a reason to connect her to Ashura's ruin. She holds that card without having played it.</li>
+        <li>Doesn't know that the woman signing off on Hearthstone District's rent prices as "the Empress" accounts for her bloodline's existence. No one has told her. No one currently could.</li>
+        <li>Fifty years is the longest she's stayed anywhere since the Hollowing. She hasn't examined too closely why Velaris, of all places, is the one that stuck.</li>
+        <li>Perrin Oswitt doesn't know what she's actually looking for on her trips, only that he's paid well enough not to ask. She hasn't decided whether that's kindness or convenience.</li>
+        <li>The old tongue isn't dead. Somewhere, a handful of lineage-keepers still speak it whole and guard the teaching of it as fiercely as anything Adonai-Vel has left. She isn't one of them, has never found one, and doesn't know if she'd be trusted to learn from one if she did.</li>
+        <li>The nobility's "blight" verdict on her mixed magic never got a real reckoning. Adonai-Vel fell before anyone had to answer for it, and she's never decided whether that counts as unfinished business or just one more thing the Hollowing buried along with everything else.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span><a href="nephilim.html">&larr; Nephilim</a></span>
+    <span>Marasa'n, of Adonai-Vel</span>
+    <span><a href="index.html">Index &rarr;</a></span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  try{
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var stored = null;
+    try { stored = localStorage.getItem('velaris-rp-theme'); } catch(e){}
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var effectiveDark = current === 'dark' || (!current && prefersDark);
+      var next = effectiveDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('velaris-rp-theme', next); } catch(e){}
+    });
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

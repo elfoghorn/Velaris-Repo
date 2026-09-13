@@ -1,0 +1,188 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Velaris Empire Compendium</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Oswald:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #e8e2d3;
+    --surface: #ded5bd;
+    --surface-2: #d3c9ab;
+    --ink: #1c1912;
+    --ink-dim: #5b5340;
+    --gold: #8a6a1f;
+    --gold-bright: #a3801f;
+    --hairline: #b9ac8a;
+    --cool: #3f6f73;
+    --shadow: rgba(28,25,18,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+      --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+      --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0b0e14; --surface: #141926; --surface-2: #1b2130;
+    --ink: #eadfb8; --ink-dim: #a89c78; --gold: #c9a13b; --gold-bright: #ecc665;
+    --hairline: #3a3220; --cool: #a9d6d9; --shadow: rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ color-scheme: light dark; }
+  body{
+    margin:0; background: var(--bg); color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+  .page{ max-width: 900px; margin: 0 auto; padding: 0 20px 90px; }
+
+  /* ---------- NAV ---------- */
+  nav.topnav{
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 14px 20px;
+    background: var(--surface); border-bottom: 1px solid var(--hairline);
+  }
+  .brand{
+    font-family: 'Cinzel', serif; font-size: 0.95rem; letter-spacing: 0.03em;
+    color: var(--ink); text-decoration: none; white-space: nowrap;
+  }
+  .navlinks{ display: flex; gap: 6px; flex-wrap: wrap; }
+  .navlinks a{
+    font-family: 'Oswald', sans-serif; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ink-dim); text-decoration: none;
+    padding: 7px 12px; border: 1px solid transparent; border-radius: 2px;
+  }
+  .navlinks a:hover{ color: var(--gold-bright); border-color: var(--hairline); }
+  .navlinks a.current{ color: var(--gold-bright); border-color: var(--gold); background: var(--surface-2); }
+  .theme-toggle{
+    background: var(--bg); border: 1px solid var(--hairline); color: var(--ink-dim);
+    font-family: 'Oswald', sans-serif; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 7px 10px; cursor: pointer; border-radius: 2px;
+  }
+  .theme-toggle:hover{ color: var(--gold-bright); border-color: var(--gold); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--cool); outline-offset: 2px; }
+
+  .eyebrow{
+    font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: uppercase;
+    letter-spacing: 0.18em; font-size: 0.72rem; color: var(--gold-bright); margin-top: 54px;
+  }
+  h1, h2, h3{ font-family: 'Cinzel', 'Times New Roman', serif; font-weight: 600; text-wrap: balance; margin: 0; color: var(--ink); }
+  h1{ font-size: clamp(2.3rem, 5.5vw, 3.6rem); margin: 12px 0 20px; }
+
+  .lede{ max-width: 62ch; color: var(--ink-dim); font-size: 1.08rem; margin: 0 0 44px; }
+
+  /* ---------- ENTRY CARDS ---------- */
+  .cards{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 0 0 48px; }
+  .card{
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 28px 26px; background: var(--surface); border: 1px solid var(--hairline);
+    text-decoration: none; color: inherit; position: relative; overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+  .card::before{
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold);
+    opacity: 0; transition: opacity 0.15s ease;
+  }
+  .card:hover{ border-color: var(--gold); }
+  .card:hover::before{ opacity: 1; }
+  .card-eyebrow{
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em;
+    font-size: 0.64rem; color: var(--gold-bright);
+  }
+  .card-title{ font-family: 'Cinzel', serif; font-size: 1.5rem; }
+  .card p{ margin: 0; color: var(--ink-dim); font-size: 0.92rem; }
+  .card-go{
+    margin-top: auto; font-family: 'Oswald', sans-serif; text-transform: uppercase;
+    letter-spacing: 0.1em; font-size: 0.66rem; color: var(--gold-bright);
+  }
+
+  .subhead{
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.14em;
+    font-size: 0.7rem; color: var(--gold-bright); margin: 0 0 14px;
+  }
+
+  .index-note{
+    border: 1px dashed var(--hairline); background: var(--surface-2);
+    padding: 18px 22px; margin: 0 0 40px; font-size: 0.92rem; color: var(--ink-dim); max-width: 68ch;
+  }
+  .index-note strong{ color: var(--ink); font-weight: 600; }
+
+  footer{
+    padding: 40px 0 20px; display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px; flex-wrap: wrap; color: var(--ink-dim);
+    font-family: 'Oswald', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    border-top: 1px solid var(--hairline);
+  }
+  footer a{ color: var(--gold-bright); text-decoration: none; }
+
+  @media (max-width: 640px){
+    .cards{ grid-template-columns: 1fr; }
+  }
+</style>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Velaris Empire RP</a>
+  <div class="navlinks">
+    <a href="index.html" class="current">Index</a>
+    <a href="nephilim.html">Nephilim</a>
+    <a href="marasan.html">Marasa'n</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">Theme</button>
+</nav>
+
+<div class="page">
+
+  <div class="eyebrow">Velaris Empire &middot; Compendium</div>
+  <h1>The Adonai-Vel Record</h1>
+  <p class="lede">A working record of the Nephilim bloodline and the woman carrying its last living pieces through Velaris: where they came from, what heaven did to their nation, and what's left of either one now.</p>
+
+  <div class="cards">
+    <a class="card" href="nephilim.html">
+      <span class="card-eyebrow">Bloodline Record</span>
+      <span class="card-title">Nephilim</span>
+      <p>The race born of a forbidden pairing between a fallen seraph and a demon, the nation they built on ground touching both heaven and hell, and the war that ended it in a single hour. Origins, biology, the Hollowing, and where the survivors scattered.</p>
+      <span class="card-go">Read the record &rarr;</span>
+    </a>
+    <a class="card" href="marasan.html">
+      <span class="card-eyebrow">Character Record</span>
+      <span class="card-title">Marasa'n</span>
+      <p>Past nine centuries old, a soldier of the war that erased her nation, and now a quiet fixture of Velaris with a blade no one has explained. Full history, combat profile, skills card, and the things she's never said out loud.</p>
+      <span class="card-go">Read the record &rarr;</span>
+    </a>
+  </div>
+
+  <div class="subhead">How to Use This</div>
+  <div class="index-note">
+    The <strong>Nephilim</strong> page covers the bloodline as a whole: its origins, its nation, its fall, and where its survivors ended up. The <strong>Marasa'n</strong> page follows one of those survivors in full, and assumes the bloodline context the first page lays out. Read Nephilim first if you're new to either.
+  </div>
+
+  <footer>
+    <span>Velaris Empire &middot; Compendium</span>
+    <span><a href="nephilim.html">Start with Nephilim &rarr;</a></span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  try{
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var stored = null;
+    try { stored = localStorage.getItem('velaris-rp-theme'); } catch(e){}
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var effectiveDark = current === 'dark' || (!current && prefersDark);
+      var next = effectiveDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('velaris-rp-theme', next); } catch(e){}
+    });
+  } catch(e){}
+})();
+</script>
+
+</body></html>
